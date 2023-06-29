@@ -1,6 +1,6 @@
 package com.ram.model;
 
-public class Question  {
+public class Question {
 	private int srno;
 	private String question;
 	private String option1;
@@ -8,13 +8,12 @@ public class Question  {
 	private String option3;
 	private String option4;
 	private String correctAns;
-	private  Category Category;
+	private Category Category;
 	private Complexity complexity;
 
 	public Question() {
 	}
 
-	
 	public int getSrno() {
 		return srno;
 	}
@@ -71,7 +70,7 @@ public class Question  {
 		this.correctAns = correctAns;
 	}
 
-	public  Category getCategory() {
+	public Category getCategory() {
 		return Category;
 	}
 
@@ -87,13 +86,10 @@ public class Question  {
 		this.complexity = complexity;
 	}
 
-
 	@Override
 	public String toString() {
-		return "Question [srno=" + srno + ", question=" + question
-				+ ", option1=" + option1 + ", option2=" + option2
-				+ ", option3=" + option3 + ", option4=" + option4
-				+ ", correctAns=" + correctAns + ", Category=" + Category
-				+ ", complexity=" + complexity + "]";
+		return "Question [srno=" + srno + ", question=" + question + ", option1=" + option1 + ", option2=" + option2
+				+ ", option3=" + option3 + ", option4=" + option4 + ", correctAns=" + correctAns + ", Category="
+				+ Category + ", complexity=" + complexity + "]";
 	}
 }
