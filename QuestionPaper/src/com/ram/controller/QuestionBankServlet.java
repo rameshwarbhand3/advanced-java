@@ -1,8 +1,9 @@
 package com.ram.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +21,7 @@ import com.ram.model.Question;
 @WebServlet("/")
 public class QuestionBankServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	private QuestionDao questionDao = new QuestionDao();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -36,40 +37,105 @@ public class QuestionBankServlet extends HttpServlet {
 		case "/insert":
 			insertQuestion(req, resp);
 			break;
+
+		case "/showEditForm":
+			showEditForm(req, resp);
+			break;
+
+		case "/edit":
+			editQuestion(req, resp);
+			break;
+			
+		case "/delete":
+            deleteQuestion(req, resp);
+            break;
+
 		default:
-			System.out.println("default action!!");
+			// System.out.println("default action!!");
+			listQuestions(req, resp);
 		}
 
 	}
 
-	private void insertQuestion(HttpServletRequest req, HttpServletResponse resp) {
-		String questionName = req.getParameter("questionName");
-		String option1 = req.getParameter("option1");
-		String option2 = req.getParameter("option2");
-		String option3 = req.getParameter("option3");
-		String option4 = req.getParameter("option4");
+	private void deleteQuestion(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		int srno = Integer.parseInt(req.getParameter("srno"));	
+		questionDao.deleteQuestion(srno);
+		resp.sendRedirect("/QuestionPaper/list");
+		
+	}
+
+	private void showEditForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int srno = Integer.parseInt(req.getParameter("srno"));
+		Question existingQuestion = questionDao.findById(srno);
+		req.setAttribute("question", existingQuestion);
+
+		RequestDispatcher requestDispatcher = req
+				.getRequestDispatcher("question-form.jsp");
+		requestDispatcher.forward(req, resp);
+
+	}
+
+	private void editQuestion(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		int srno = Integer.parseInt(req.getParameter("srno"));
+		String questionName = req.getParameter("question");
+		String optionA = req.getParameter("optionA");
+		String optionB = req.getParameter("optionB");
+		String optionC = req.getParameter("optionC");
+		String optionD = req.getParameter("optionD");
 		String correctAns = req.getParameter("correctAns");
 		String category = req.getParameter("category");
 		String complexity = req.getParameter("complexity");
+
 		Question q = new Question();
+		q.setSrno(srno);
 		q.setQuestion(questionName);
-		q.setOption1(option1);
-		q.setOption2(option2);
-		q.setOption3(option3);
-		q.setOption4(option4);
+		q.setOption1(optionA);
+		q.setOption2(optionB);
+		q.setOption3(optionC);
+		q.setOption4(optionD);
 		q.setCorrectAns(correctAns);
 		q.setComplexity(Complexity.valueOf(complexity));
 		q.setType(Category.valueOf(category));
-		System.out.println("question=>" + q);
-		questionDao.insertQuestion(q);
-		
-		// TODO: remove below - after insert should forward to list-question.jsp page
-		try {
-			PrintWriter pw = resp.getWriter();
-			pw.println("<br>Question added successfully</br>");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
+		questionDao.update(q);
+
+		resp.sendRedirect("/QuestionPaper/list");
+
+	}
+
+	private void listQuestions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		List<Question> listQuestion = questionDao.findAll();
+		req.setAttribute("listQuestion", listQuestion);
+		// System.out.println(listQuestion);
+		RequestDispatcher dispatcher = req.getRequestDispatcher("question-list.jsp");
+		dispatcher.forward(req, resp);
+
+	}
+
+	private void insertQuestion(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		String questionName = req.getParameter("question");
+		String optionA = req.getParameter("optionA");
+		String optionB = req.getParameter("optionB");
+		String optionC = req.getParameter("optionC");
+		String optionD = req.getParameter("optionD");
+		String correctAns = req.getParameter("correctAns");
+		String category = req.getParameter("category");
+		String complexity = req.getParameter("complexity");
+
+		Question q = new Question();
+		q.setQuestion(questionName);
+		q.setOption1(optionA);
+		q.setOption2(optionB);
+		q.setOption3(optionC);
+		q.setOption4(optionD);
+		q.setCorrectAns(correctAns);
+		q.setComplexity(Complexity.valueOf(complexity));
+		q.setType(Category.valueOf(category));
+		// System.out.println("question=>" + q);
+		questionDao.insert(q);
+
+		resp.sendRedirect("/QuestionPaper/list");
+
 	}
 
 }
