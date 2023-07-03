@@ -1,6 +1,7 @@
 package com.ram.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.ram.dao.QuestionDao;
 import com.ram.model.Category;
@@ -45,10 +47,14 @@ public class QuestionBankServlet extends HttpServlet {
 		case "/edit":
 			editQuestion(req, resp);
 			break;
-			
+
 		case "/delete":
-            deleteQuestion(req, resp);
-            break;
+			deleteQuestion(req, resp);
+			break;
+
+		case "/logout":
+			logoutSession(req, resp);
+			break;
 
 		default:
 			// System.out.println("default action!!");
@@ -57,11 +63,26 @@ public class QuestionBankServlet extends HttpServlet {
 
 	}
 
+	private void logoutSession(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		RequestDispatcher requestDispatcher = req.getRequestDispatcher("login.jsp");
+		requestDispatcher.include(req, resp);
+		resp.setContentType("text/html");
+		PrintWriter out = resp.getWriter();
+		//req.getSession(false).invalidate();
+		 HttpSession session=req.getSession();  
+         session.invalidate();  
+		//req.getSession().removeAttribute("username");
+		out.println("<h2>Thank you! You are successfully logged out.</h2>");
+		
+		out.close();
+
+	}
+
 	private void deleteQuestion(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		int srno = Integer.parseInt(req.getParameter("srno"));	
+		int srno = Integer.parseInt(req.getParameter("srno"));
 		questionDao.deleteQuestion(srno);
 		resp.sendRedirect("/QuestionPaper/list");
-		
+
 	}
 
 	private void showEditForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -69,8 +90,7 @@ public class QuestionBankServlet extends HttpServlet {
 		Question existingQuestion = questionDao.findById(srno);
 		req.setAttribute("question", existingQuestion);
 
-		RequestDispatcher requestDispatcher = req
-				.getRequestDispatcher("question-form.jsp");
+		RequestDispatcher requestDispatcher = req.getRequestDispatcher("question-form.jsp");
 		requestDispatcher.forward(req, resp);
 
 	}

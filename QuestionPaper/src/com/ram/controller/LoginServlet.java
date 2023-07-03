@@ -1,11 +1,16 @@
 package com.ram.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.ram.dao.LoginDao;
 import com.ram.model.Login;
 
@@ -29,14 +34,23 @@ public class LoginServlet extends HttpServlet {
 		Login login = new Login();
 		login.setUsername(username);
 		login.setPassword(password);
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
 		try {
 			if (loginDao.validate(login)) {
-				// HttpSession session = request.getSession();
-				// request.setAttribute("username",username);
-				response.sendRedirect("/QuestionPaper/list");
-			} else {
-				response.sendRedirect("errorHandler.jsp");
-			}
+				 HttpSession session = request.getSession();
+				 request.setAttribute("username",username);
+				
+				response.sendRedirect("/QuestionPaper/list?name=" + username);
+			} 
+//			else {
+//				response.sendRedirect("errorHandler.jsp");
+//			}
+			else {
+	            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+	            out.println("<font color=red><h2>Sorry username or Password is error.</h2></font>");
+	            rd.include(request, response);
+	        }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

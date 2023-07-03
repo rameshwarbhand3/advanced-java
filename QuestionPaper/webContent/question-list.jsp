@@ -9,10 +9,25 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
+
+<!--  <script type="text/javascript">
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+    </script>-->
 </head>
 
 <body>
 
+	<h3 class="text-center">
+		Welcome to
+		<%=request.getParameter("name")%>!
+	</h3>
+	<form action="<%=request.getContextPath()%>/logout" method="post">
+		<h4 class="text-right">
+			<input type="submit" value="Logout">
+		</h4>
+	</form>
 	<header>
 		<nav class="navbar navbar-expand-md navbar-dark"
 			style="background-color: tomato">
@@ -25,6 +40,7 @@
 				<li><a href="<%=request.getContextPath()%>/list"
 					class="nav-link">Questions</a></li>
 			</ul>
+
 		</nav>
 	</header>
 	<br>
@@ -34,6 +50,7 @@
 
 		<div class="container">
 			<h3 class="text-center">List of Questions</h3>
+
 			<hr>
 			<div class="container text-left">
 
@@ -71,8 +88,10 @@
 							<td><c:out value="${question.correctAns}" /></td>
 							<td><c:out value="${question.category}" /></td>
 							<td><c:out value="${question.complexity}" /></td>
-							<td><a href="showEditForm?srno=<c:out value='${question.srno}' />">Edit</a><br><br>
-								<a href="delete?srno=<c:out value='${question.srno}' />">Delete</a>
+							<td><a
+								href="showEditForm?srno=<c:out value='${question.srno}' />">Edit</a><br>
+								<br> <a
+								href="delete?srno=<c:out value='${question.srno}' />">Delete</a>
 							</td>
 						</tr>
 					</c:forEach>
