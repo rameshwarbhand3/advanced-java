@@ -32,10 +32,10 @@
 		<div class="card">
 			<div class="card-body">
 				<c:if test="${question != null}">
-					<form action="edit" method="post"></form>
+					<form action="edit" method="post">
 				</c:if>
 				<c:if test="${question == null}">
-					<form action="insert" method="post"></form>
+					<form action="insert" method="post">
 				</c:if>
 
 				<caption>
