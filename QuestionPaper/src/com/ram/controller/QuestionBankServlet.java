@@ -1,7 +1,6 @@
 package com.ram.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -10,8 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import com.ram.dao.QuestionDao;
 import com.ram.model.Category;
 import com.ram.model.Complexity;
@@ -52,8 +49,12 @@ public class QuestionBankServlet extends HttpServlet {
 			deleteQuestion(req, resp);
 			break;
 
-		case "/logout":
-			logoutSession(req, resp);
+		case "/showByCategory":
+			showByCategory(req, resp);
+			break;
+
+		case "/showByComplexity":
+			showByComplexity(req, resp);
 			break;
 
 		default:
@@ -63,18 +64,28 @@ public class QuestionBankServlet extends HttpServlet {
 
 	}
 
-	private void logoutSession(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		RequestDispatcher requestDispatcher = req.getRequestDispatcher("login.jsp");
-		requestDispatcher.include(req, resp);
-		resp.setContentType("text/html");
-		PrintWriter out = resp.getWriter();
-		//req.getSession(false).invalidate();
-		 HttpSession session=req.getSession();  
-         session.invalidate();  
-		//req.getSession().removeAttribute("username");
-		out.println("<h2>Thank you! You are successfully logged out.</h2>");
-		
-		out.close();
+	private void showByComplexity(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		String questionByComplexity = req.getParameter("complexity");
+		System.out.println(questionByComplexity);
+		List<Question> existingQuestionByComplexity = questionDao.findByComplexity(questionByComplexity);
+		System.out.println(existingQuestionByComplexity);
+		req.setAttribute("listQuestion", existingQuestionByComplexity);
+
+		RequestDispatcher requestDispatcher = req.getRequestDispatcher("question-list.jsp");
+		requestDispatcher.forward(req, resp);
+
+	}
+
+	private void showByCategory(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String questionByCategory = req.getParameter("category");
+		System.out.println(questionByCategory);
+		List<Question> existingQuestionByCategory = questionDao.findByCategory(questionByCategory);
+		System.out.println(existingQuestionByCategory);
+		req.setAttribute("listQuestion", existingQuestionByCategory);
+
+		RequestDispatcher requestDispatcher = req.getRequestDispatcher("question-list.jsp");
+		requestDispatcher.forward(req, resp);
 
 	}
 

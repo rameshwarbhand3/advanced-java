@@ -28,7 +28,11 @@ public class QuestionDao {
 
 	private static final String UPDATE_QUESTION = "update questionBank set Question=?,optionA=?,optionB=?,optionC=?,optionD=?,correctAns=?,Category=?,complexity=? where srNo=?";
 
-	 private static final String DELETE_Question = "delete from questionBank where srNo=?";
+	private static final String DELETE_Question = "delete from questionBank where srNo=?";
+
+	private static final String FIND_BY_CATEGORY_QUESTION = "select * from questionBank where category=?";
+
+	private static final String FIND_BY_COMPLEXITY_QUESTION = "select * from questionBank where complexity=?";
 
 	protected Connection getConnection() {
 		Connection connection = null;
@@ -97,7 +101,7 @@ public class QuestionDao {
 	public void update(Question question) {
 		try (Connection connection = getConnection();
 				PreparedStatement pst = connection.prepareStatement(UPDATE_QUESTION)) {
-			
+
 			pst.setString(1, question.getQuestion());
 			pst.setString(2, question.getOption1());
 			pst.setString(3, question.getOption2());
@@ -150,17 +154,90 @@ public class QuestionDao {
 	}
 
 	public void deleteQuestion(int srno) {
-		try(
-				Connection connection = getConnection();
-				PreparedStatement pst = connection.prepareStatement(DELETE_Question);
-				){
+		try (Connection connection = getConnection();
+				PreparedStatement pst = connection.prepareStatement(DELETE_Question);) {
 			pst.setInt(1, srno);
 			pst.executeUpdate();
 		} catch (SQLException e) {
-		
+
 			e.printStackTrace();
 		}
-		
+
+	}
+
+	public List<Question> findByCategory(String questionByCategory) {
+		List<Question> listQuestion = new ArrayList<>();
+		try (Connection connection = getConnection();
+				PreparedStatement pst = connection.prepareStatement(FIND_BY_CATEGORY_QUESTION)) {
+			pst.setString(1, questionByCategory);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				int srno = rs.getInt("srno");
+				String question = rs.getString("question");
+				String optionA = rs.getString("optionA");
+				String optionB = rs.getString("optionB");
+				String optionC = rs.getString("optionC");
+				String optionD = rs.getString("optionD");
+				String correctAns = rs.getString("correctAns");
+				String category = rs.getString("category");
+				String complexity = rs.getString("complexity");
+				Question q = new Question();
+				q.setSrno(srno);
+				q.setQuestion(question);
+				q.setOption1(optionA);
+				q.setOption2(optionB);
+				q.setOption3(optionC);
+				q.setOption4(optionD);
+				q.setCorrectAns(correctAns);
+				q.setComplexity(Complexity.valueOf(complexity));
+				q.setType(Category.valueOf(category));
+				listQuestion.add(q);
+				System.out.println(q);
+				return listQuestion;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+
+	public List<Question> findByComplexity(String questionByComplexity) {
+		List<Question> listQuestion = new ArrayList<>();
+		try (Connection connection = getConnection();
+				PreparedStatement pst = connection.prepareStatement(FIND_BY_COMPLEXITY_QUESTION)) {
+			pst.setString(1, questionByComplexity);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				int srno = rs.getInt("srno");
+				String question = rs.getString("question");
+				String optionA = rs.getString("optionA");
+				String optionB = rs.getString("optionB");
+				String optionC = rs.getString("optionC");
+				String optionD = rs.getString("optionD");
+				String correctAns = rs.getString("correctAns");
+				String category = rs.getString("category");
+				String complexity = rs.getString("complexity");
+				Question q = new Question();
+				q.setSrno(srno);
+				q.setQuestion(question);
+				q.setOption1(optionA);
+				q.setOption2(optionB);
+				q.setOption3(optionC);
+				q.setOption4(optionD);
+				q.setCorrectAns(correctAns);
+				q.setComplexity(Complexity.valueOf(complexity));
+				q.setType(Category.valueOf(category));
+				listQuestion.add(q);
+				return listQuestion;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }
