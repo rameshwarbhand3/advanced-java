@@ -69,8 +69,36 @@
 						<th>Option3</th>
 						<th>Option4</th>
 						<th>CorrectAns</th>
-						<th>Category</th>
-						<th>Complexity</th>
+
+						<th><form
+								action="<%=request.getContextPath()%>/showByCategory"
+								method="post">
+								<fieldset class="form-group">
+									<label>Category <select name="category">
+											<option ${question.category eq 'GK' ? 'selected' : '' }>GK</option>
+											<option ${question.category eq 'Science' ? 'selected' : '' }>Science</option>
+											<option ${question.category eq 'History' ? 'selected' : '' }>History</option>
+											<option ${question.category eq 'Geography' ? 'selected' : '' }>Geography</option>
+									</select>
+									</label>
+								</fieldset>
+								<input type="submit" value="show">
+							</form></th>
+
+						<th><form
+								action="<%=request.getContextPath()%>/showByComplexity"
+								method="post">
+
+								<fieldset class="form-group">
+									<label>Complexity</label> <select name="complexity">
+										<option ${question.complexity eq 'Simple' ? 'selected' : '' }>Simple</option>
+										<option ${question.complexity eq 'Medium' ? 'selected' : '' }>Medium</option>
+										<option ${question.complexity eq 'Complex' ? 'selected' : '' }>Complex</option>
+									</select>
+								</fieldset>
+								<input type="submit" value="show">
+							</form></th>
+
 						<th>Action</th>
 					</tr>
 				</thead>
