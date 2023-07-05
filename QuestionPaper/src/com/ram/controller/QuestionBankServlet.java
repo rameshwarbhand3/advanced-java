@@ -1,14 +1,18 @@
 package com.ram.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.ram.dao.QuestionDao;
 import com.ram.model.Category;
 import com.ram.model.Complexity;
@@ -28,10 +32,26 @@ public class QuestionBankServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
+	void printCookies(Cookie[] cookies) {
+		System.out.println("cookies are => ");
+		for (Cookie cookie : cookies) {
+			System.out.println(cookie.getName() + ":" + cookie.getValue());
+		}
+	}
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getServletPath();
 		System.out.println(action);
+
+//		HttpSession currentSession = req.getSession(false);
+//		System.out.println("current logged user: " + currentSession.getAttribute("username"));
+//		System.out.println("Session Id : " + currentSession.getId());
+//		System.out.println("Session creation time : " + new Date(currentSession.getCreationTime()));
+//		System.out.println("Session Id : " + new Date(currentSession.getLastAccessedTime()));
+//
+//		printCookies(req.getCookies());
+
 		switch (action) {
 		case "/insert":
 			insertQuestion(req, resp);
