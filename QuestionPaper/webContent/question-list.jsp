@@ -21,7 +21,7 @@
 
 	<h3 class="text-center">
 		Welcome to
-		<%=request.getParameter("name")%>!
+		<%=session.getAttribute("username")%>!
 	</h3>
 	<form action="<%=request.getContextPath()%>/logout" method="post">
 		<h4 class="text-right">
