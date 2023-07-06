@@ -55,7 +55,11 @@
 			<div class="container text-left">
 
 				<a href="<%=request.getContextPath()%>/question-form.jsp"
-					class="btn btn-success">Add New Question</a>
+					class="btn btn-success">Add New Question</a>&emsp;&emsp;
+					
+					<a href="<%=request.getContextPath()%>/generate-qp.jsp"
+					class="btn btn-success">Generate Question Paper</a>
+				
 			</div>
 
 			<br>
@@ -78,7 +82,8 @@
 											<option ${question.category eq 'GK' ? 'selected' : '' }>GK</option>
 											<option ${question.category eq 'Science' ? 'selected' : '' }>Science</option>
 											<option ${question.category eq 'History' ? 'selected' : '' }>History</option>
-											<option ${question.category eq 'Geography' ? 'selected' : '' }>Geography</option>
+											<option
+												${question.category eq 'Geography' ? 'selected' : '' }>Geography</option>
 									</select>
 									</label>
 								</fieldset>
