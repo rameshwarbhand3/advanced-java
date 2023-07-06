@@ -13,40 +13,61 @@
 
 </head>
 <body>
-	<form id="criteriaForm" onclick="return doForm()">
-		<h4>Select a Criteria</h4>
-		<hr>
-		<fieldset>
-			<label>Number of Questions : <input type="number"
-				name="number" min="0" max="100" step="1" value="1"></label> <br />
-		</fieldset>
+<header>
+		<nav class="navbar navbar-expand-md navbar-dark"
+			style="background-color: tomato">
+			<div>
+				<a href="https://www.javaguides.net" class="navbar-brand">
+					Question Paper Generator System </a>
+			</div>
 
-		<fieldset class="form-group">
-			<label>Category <select name="category">
-					<option>GK</option>
-					<option>Science</option>
-					<option>History</option>
-					<option>Geography</option>
-			</select>
-			</label>
-		</fieldset>
+			<ul class="navbar-nav">
+				<li><a href="<%=request.getContextPath()%>/list"
+					class="nav-link">Questions</a></li>
+			</ul>
+		</nav>
+	</header>
+	<br>
+	<div class="container col-md-5">
+		<div class="card">
+			<div class="card-body">
+				<form id="criteriaForm" onclick="return doForm()">
+					<h4>Select a Criteria</h4>
+					<hr>
+					<fieldset>
+						<label>Number of Questions : <input type="number"
+							name="noOfQuestion" min="0" max="100" step="1" value="1"></label>
+						<br />
+					</fieldset>
 
-		<fieldset class="form-group">
-			<label>Complexity</label> <select name="complexity">
-				<option>Simple</option>
-				<option>Medium</option>
-				<option>Complex</option>
-			</select>
-		</fieldset>
+					<fieldset class="form-group">
+						<label>Category <select name="category">
+								<option>GK</option>
+								<option>Science</option>
+								<option>History</option>
+								<option>Geography</option>
+						</select>
+						</label>
+					</fieldset>
 
-		<br />
-		<button type="submit" onclick="addCriteria()">Add Criteria</button>
-	</form>
-	<hr>
+					<fieldset class="form-group">
+						<label>Complexity</label> <select name="complexity">
+							<option>Simple</option>
+							<option>Medium</option>
+							<option>Complex</option>
+						</select>
+					</fieldset>
 
-	<button type="submit" onclick="generateQuestionPaper()">Generate
-		Question Paper</button>
+					<br />
+					<button type="submit" onclick="addCriteria()"class="btn btn-primary">Add Criteria</button>
+				</form>
+				<hr>
 
+				<button type="submit" onclick="generateQuestionPaper()" class="btn btn-success">Generate
+					Question Paper</button>
+			</div>
+		</div>
+	</div>
 	<jsp:include page="generated-question-paper-set.jsp" />
 
 	<script>
