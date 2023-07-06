@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.ram.model.Category;
 import com.ram.model.Complexity;
 import com.ram.model.Question;
