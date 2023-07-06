@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Login page</title>
-<script type="text/javascript">
+<!--  <script type="text/javascript">
 	function preventBack() {
 		window.history.forward();
 	}
@@ -13,7 +13,7 @@
 	window.onunload = function() {
 		null
 	};
-</script>
+</script>-->
 </head>
 <body>
 	
@@ -26,6 +26,9 @@
 			Password : <input type="password" name="password"><br /> <br />
 			<input type="submit" value="Submit">
 
+		</form>
+		<form>
+		New User : <a href="<%=request.getContextPath()%>/sign-up.jsp">SignUp here?</a>
 		</form>
 
 	</div>

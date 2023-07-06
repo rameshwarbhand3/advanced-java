@@ -18,7 +18,7 @@ public class LoginFilter implements Filter {
 			throws IOException, ServletException {
 
 		HttpServletRequest req = (HttpServletRequest) request;
-		if (!req.getRequestURI().contains("/login") && req.getSession(false) == null) {
+		if (!req.getRequestURI().contains("/login") && req.getSession(false) == null ) {
 			req.getRequestDispatcher("login.jsp").forward(req, response);
 			return;
 		}

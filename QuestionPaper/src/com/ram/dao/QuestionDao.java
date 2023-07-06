@@ -1,7 +1,6 @@
 package com.ram.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,11 +11,7 @@ import com.ram.model.Category;
 import com.ram.model.Complexity;
 import com.ram.model.Question;
 
-public class QuestionDao {
-	private String jdbcDriver = "com.mysql.jdbc.Driver";
-	private String jdbcUrl = "jdbc:mysql://localhost:3306/questionPaperGeneratorDb";
-	private String jdbcUser = "root";
-	private String jdbcPassword = "root";
+public class QuestionDao extends BaseDao{
 
 	private static final String INSERT_QUESTION = "insert into questionBank"
 			+ "(SrNo,Question,optionA,optionB,optionC,OptionD,CorrectAns,Category,Complexity)values"
@@ -34,20 +29,9 @@ public class QuestionDao {
 
 	private static final String FIND_BY_COMPLEXITY_QUESTION = "select * from questionBank where complexity=?";
 
-	protected Connection getConnection() {
-		Connection connection = null;
-		try {
-			Class.forName(jdbcDriver);
-			connection = DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return connection;
-	}
-
 	public Question findById(int id) {
 		try (Connection connection = getConnection();
-				PreparedStatement pst = connection.prepareStatement(SELECT_QUESTION);) {
+				PreparedStatement pst = connection.prepareStatement(SELECT_QUESTION)) {
 			pst.setInt(1, id);
 			List<Question> questions = processResultSet(pst);
 			if (!questions.isEmpty()) {

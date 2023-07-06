@@ -8,25 +8,31 @@ use  questionPaperGeneratorDb;
 
 DROP TABLE IF EXISTS `users`;
 
-create table users (username varchar(255),password varchar(255));
-insert into users values('ram',MD5('ram'));
-insert into users values('sham',MD5('sham'));
-insert into users values('ravi',MD5('ravi'));
-insert into users values('raj',MD5('raj'));
+CREATE TABLE users (
+    username VARCHAR(255),
+    password VARCHAR(255),
+    email VARCHAR(50),
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    PRIMARY KEY (email , username)
+);
+insert ignore into users values('ram',MD5('ram'),'ram@luv2code.com','Rameshwar','Bhand');
+insert ignore into users values('sham',MD5('sham'),'sham@luv2code.com','Sham','Bhand');
+
 
 DROP TABLE IF EXISTS `questionBank`;
 
 CREATE TABLE `questionBank` (
-  `SrNo` int(3) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `Question` varchar(100) DEFAULT NULL,
-  `optionA` varchar(50) DEFAULT NULL,
-  `optionB` varchar(50) DEFAULT NULL,
-  `optionC` varchar(80) DEFAULT NULL,
-  `OptionD` varchar(50) DEFAULT NULL,
-  `CorrectAns` varchar(10) DEFAULT NULL,
-  `Category` varchar(15) DEFAULT NULL,
-  `Complexity` varchar(15) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+    `SrNo` INT(3) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    `Question` VARCHAR(100) DEFAULT NULL,
+    `optionA` VARCHAR(50) DEFAULT NULL,
+    `optionB` VARCHAR(50) DEFAULT NULL,
+    `optionC` VARCHAR(80) DEFAULT NULL,
+    `OptionD` VARCHAR(50) DEFAULT NULL,
+    `CorrectAns` VARCHAR(10) DEFAULT NULL,
+    `Category` VARCHAR(15) DEFAULT NULL,
+    `Complexity` VARCHAR(15) DEFAULT NULL
+)  ENGINE=INNODB DEFAULT CHARSET=LATIN1;
 
 
 --
