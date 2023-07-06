@@ -40,4 +40,9 @@ public class Criteria {
 		this.complexity = complexity;
 	}
 
+	@Override
+	public String toString() {
+		return "Criteria [category=" + category + ", complexity=" + complexity + ", noOfQuestion=" + noOfQuestion + "]";
+	}
+
 }

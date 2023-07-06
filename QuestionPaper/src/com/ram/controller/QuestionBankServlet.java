@@ -1,11 +1,7 @@
 package com.ram.controller;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,9 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.ram.dao.QuestionDao;
 import com.ram.model.Category;
 import com.ram.model.Complexity;
-import com.ram.model.Criteria;
 import com.ram.model.Question;
-import com.ram.service.QuestionPaperGeneratorService;
 
 /**
  * Servlet implementation class QuestionBankServlet
@@ -29,8 +23,6 @@ public class QuestionBankServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private QuestionDao questionDao = new QuestionDao();
-
-	private QuestionPaperGeneratorService questionPaperGeneratorService = new QuestionPaperGeneratorService();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -82,52 +74,10 @@ public class QuestionBankServlet extends HttpServlet {
 			showByComplexity(req, resp);
 			break;
 
-		case "/showByCriteria":
-			showByCriteria(req, resp);
-			break;
-
 		default:
 			// System.out.println("default action!!");
 			listQuestions(req, resp);
 		}
-
-	}
-
-	private void showByCriteria(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("show by criteria");
-		String jsonBody = getTemplateJsonStringFromRequest(req);
-		System.out.println(jsonBody);
-		List<Question> listQuestion = questionDao.findAll();
-		Set<Question> generateQuestionSet = questionPaperGeneratorService.generateQuestionPaper(listQuestion, buildQuestionPaperTemplate());
-		req.setAttribute("listQuestion", generateQuestionSet);
-		// System.out.println(listQuestion);
-		RequestDispatcher dispatcher = req.getRequestDispatcher("generate-qp.jsp");
-		dispatcher.include(req, resp);
-	}
-
-	private String getTemplateJsonStringFromRequest(HttpServletRequest req) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		BufferedReader reader = req.getReader();
-		String line;
-		while ((line = reader.readLine()) != null) {
-			sb.append(line);
-		}
-		String requestBody = sb.toString();
-		return requestBody;
-	}
-
-	private List<Criteria> buildQuestionPaperTemplate() {
-		List<Criteria> template = new ArrayList<>();
-		template.add(new Criteria(Category.GK, Complexity.Simple, 2));
-		template.add(new Criteria(Category.GK, Complexity.Medium, 1));
-		template.add(new Criteria(Category.GK, Complexity.Complex, 1));
-
-		template.add(new Criteria(Category.Science, Complexity.Complex, 1));
-		template.add(new Criteria(Category.History, Complexity.Simple, 2));
-		template.add(new Criteria(Category.History, Complexity.Medium, 2));
-
-		template.add(new Criteria(Category.Geography, Complexity.Medium, 1));
-		return template;
 	}
 
 	private void showByComplexity(HttpServletRequest req, HttpServletResponse resp)
@@ -152,7 +102,6 @@ public class QuestionBankServlet extends HttpServlet {
 
 		RequestDispatcher requestDispatcher = req.getRequestDispatcher("question-list.jsp");
 		requestDispatcher.forward(req, resp);
-
 	}
 
 	private void deleteQuestion(HttpServletRequest req, HttpServletResponse resp) throws IOException {

@@ -10,10 +10,13 @@
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
 <!--  <script type="text/javascript" src="${pageContext.request.contextPath}/js/generate-criteria.js"></script>-->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 
 </head>
 <body>
-<header>
+	<header>
 		<nav class="navbar navbar-expand-md navbar-dark"
 			style="background-color: tomato">
 			<div>
@@ -59,16 +62,40 @@
 					</fieldset>
 
 					<br />
-					<button type="submit" onclick="addCriteria()"class="btn btn-primary">Add Criteria</button>
+					<button type="submit" onclick="addCriteria()"
+						class="btn btn-primary">Add Criteria</button>
 				</form>
 				<hr>
 
-				<button type="submit" onclick="generateQuestionPaper()" class="btn btn-success">Generate
-					Question Paper</button>
+				<button type="submit" onclick="generateQuestionPaper()"
+					class="btn btn-success">Generate Question Paper</button>
 			</div>
 		</div>
 	</div>
-	<jsp:include page="generated-question-paper-set.jsp" />
+	<br />
+	<div class="row">
+		<!-- <div class="alert alert-success" *ngIf='message'>{{message}}</div> -->
+
+		<div class="container">
+
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Srno</th>
+						<th>Question</th>
+						<th>Option1</th>
+						<th>Option2</th>
+						<th>Option3</th>
+						<th>Option4</th>
+						<th>CorrectAns</th>
+						<th>Category</th>
+						<th>Complexity</th>
+					</tr>
+				</thead>
+				<tbody id="questionData">
+			</table>
+		</div>
+	</div>
 
 	<script>
 	    let template = [];
@@ -87,12 +114,15 @@
 			alert("Do you want to more criteria?");
 		}
 		function generateQuestionPaper(){
-			fetch("/QuestionPaper/showByCriteria", { method:"post", body:JSON.stringify(template) })
-			  .then(res => {
-				  console.log("showByCriteria returns status Success, statuCode:"+res.status);
-				  alert("The question papare has been generated successfully as per template added");
+			fetch("/QuestionPaper/generate", { method:"post", body:JSON.stringify(template) })
+			  .then(res => res.text())
+			  .then(txt => {
+				  let data = JSON.parse(txt) 
+				  console.log(data)
+	               var output = data.map(q => "<tr><td>" + q.srno + "</td><td>" + q.question + "</td><td>" + q.option1 + "</td><td>" + q.option2 + "</td><td>" + q.option3 + "</td><td>" + q.option4 + "</td><td>" + q.correctAns + "</td><td>" + q.category + "</td><td>" + q.complexity + "</td></tr>");
+	               $("#questionData").html(output);
+				  console.log(txt)
 			  })
-			  .then(txt => console.log(txt))
 			  .catch(err => console.error(err));
 
 		}
