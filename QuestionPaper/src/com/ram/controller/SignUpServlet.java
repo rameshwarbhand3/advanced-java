@@ -51,7 +51,7 @@ public class SignUpServlet extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-		out.println("<font color=red><h2>You are successfully registerd!!!.</h2></font>");
+		out.println("<font color=red><h2 text-align=\"center\">You are successfully registerd!!!.</h2></font>");
 
 		rd.include(request, response);
 	

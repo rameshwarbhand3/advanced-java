@@ -5,7 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Login page</title>
-<!--  <script type="text/javascript">
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+
+<!-- <script type="text/javascript">
 	function preventBack() {
 		window.history.forward();
 	}
@@ -13,24 +19,35 @@
 	window.onunload = function() {
 		null
 	};
-</script>-->
+</script> -->
 </head>
+
 <body>
-	
-	<div align="center">
-		<h1>User Login form</h1>
+	<header>
+		<nav class="navbar navbar-expand-md navbar-dark"
+			style="background-color: tomato">
+			<div align="center">
+				<h2 class="text-white">Question Paper Generator</h2>
+			</div>
+		</nav>
+	</header>
 
-		<form action="<%=request.getContextPath()%>/loginServlet"
-			method="post">
-			UserName : <input type="text" name="username"><br /> <br />
-			Password : <input type="password" name="password"><br /> <br />
-			<input type="submit" value="Submit">
+	<div class="container col-md-5">
+		<div class="card">
+			<div class="card-body">
+				<div align="center">
+					<h1>User Login form</h1>
 
-		</form>
-		<form>
-		New User : <a href="<%=request.getContextPath()%>/sign-up.jsp">SignUp here?</a>
-		</form>
-
-	</div>
+					<form action="<%=request.getContextPath()%>/loginServlet"
+						method="post">
+						UserName : <input type="text" name="username"><br /> <br />
+						Password : <input type="password" name="password"><br />
+						<br />
+						<button type="submit" class="btn btn-success">Login</button>
+						<a href="<%=request.getContextPath()%>/sign-up.jsp"> Sign Up </a>
+					</form>
+				</div>
+			</div>
+		</div>
 </body>
 </html>
