@@ -11,6 +11,15 @@
 	crossorigin="anonymous">
 </head>
 <body>
+	<header>
+		<nav class="navbar navbar-expand-md navbar-dark"
+			style="background-color: tomato">
+			<div align="center">
+				<h2 class="text-white">Question Paper Generator</h2>
+			</div>
+		</nav>
+	</header>
+	<br/>
 	<div class="container col-md-5">
 		<div class="card">
 			<div class="card-body">
@@ -23,22 +32,21 @@
 							placeholder="Enter userName" name="userName" required><br />
 						<br /> <label for="password"><b>Password</b></label> <input
 							type="password" placeholder="Enter Password" name="password"
-							required> <br />
-						<br /> <label for="email"><b>Email</b></label> <input type="text"
-							placeholder="Enter Email" name="email" required><br />
+							required> <br /> <br /> <label for="email"><b>Email</b></label>
+						<input type="text" placeholder="Enter Email" name="email" required><br />
 						<br /> <label for="firstName"><b>FirstName</b></label> <input
 							type="text" placeholder="Enter firstName" name="firstName"
-							required><br />
-						<br /> <label for="lastName"><b>LastName</b></label> <input
-							type="text" placeholder="Enter lastName" name="lastName" required><br />
-						<br />
+							required><br /> <br /> <label for="lastName"><b>LastName</b></label>
+						<input type="text" placeholder="Enter lastName" name="lastName"
+							required><br /> <br />
 
 						<!--  <label> <input type="checkbox"
 				checked="checked" name="remember" style="marginbottom: 15px">
 				Remember me </label><br/><br/>-->
 
 						<div>
-							<a href="/QuestionPaper/login.jsp" id="cancel" name="cancel" class="btn btn-success">Cancel</a>
+							<a href="/QuestionPaper/login.jsp" id="cancel"
+								class="btn btn-success">Cancel</a>
 							<button type="submit" class="btn btn-success">Sign Up</button>
 						</div>
 					</div>
