@@ -17,31 +17,33 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/logout")
 public class LogOutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LogOutServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public LogOutServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("login.jsp");
 		requestDispatcher.include(request, response);
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		//req.getSession(false).invalidate();
-		 HttpSession session=request.getSession();  
-         session.invalidate();  
-		//req.getSession().removeAttribute("username");
-		out.println("<h2>Thank you! You are successfully logged out.</h2>");
-		
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			request.getSession().removeAttribute("username");
+			session.invalidate();
+			System.out.println("session has invalidated and logged out");
+		}
+		out.println("<font color=red><h4>Thank you! You are successfully logged out.</h4></font>");
 		out.close();
-
 	}
 
 }
