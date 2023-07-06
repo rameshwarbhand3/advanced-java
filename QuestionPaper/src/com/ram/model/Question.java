@@ -8,7 +8,7 @@ public class Question {
 	private String option3;
 	private String option4;
 	private String correctAns;
-	private Category Category;
+	private Category category;
 	private Complexity complexity;
 
 	public Question() {
@@ -71,11 +71,11 @@ public class Question {
 	}
 
 	public Category getCategory() {
-		return Category;
+		return category;
 	}
 
 	public void setType(Category type) {
-		this.Category = type;
+		this.category = type;
 	}
 
 	public Complexity getComplexity() {
@@ -89,7 +89,7 @@ public class Question {
 	@Override
 	public String toString() {
 		return "Question [srno=" + srno + ", question=" + question + ", option1=" + option1 + ", option2=" + option2
-				+ ", option3=" + option3 + ", option4=" + option4 + ", correctAns=" + correctAns + ", Category="
-				+ Category + ", complexity=" + complexity + "]";
+				+ ", option3=" + option3 + ", option4=" + option4 + ", correctAns=" + correctAns + ", category="
+				+ category + ", complexity=" + complexity + "]";
 	}
 }
